@@ -98,10 +98,6 @@ class Camera:
         x = -target.pos.x + int(self.camera.width / 2)
         y = -target.pos.y + int(self.camera.height / 2)
 
-        x = min(0, x)
-        x = max(-(self.width - self.camera.width), x)
-        y = max(-(self.height - self.camera.height), y)
-        y = min(0, y)
 
         self.camera = pygame.Rect(x, y, self.camera.width, self.camera.height)
 
@@ -134,9 +130,11 @@ while running:
     player.update(grounds)
     camera.update(player)
     all_sprites.update()
-
-    screen.blit(background, (0, 0))
-    #screen.fill("#0e69ab")
+    #print(camera.camera.topleft)
+    background_rect = background.get_rect(topleft=(camera.camera.topleft[0],camera.camera.topleft[1]+grounds[-1].posx))
+    screen.blit(background, background_rect)
+    #screen.blit(background, (0, 0))
+    #  screen.fill("#0e69ab")
 
     screen.blit(player.image, camera.apply(player))
     
